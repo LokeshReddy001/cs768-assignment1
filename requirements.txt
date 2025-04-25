@@ -1,0 +1,5 @@
+networkx
+matplotlib
+tqdm
+rapidfuzz
+pybtex
