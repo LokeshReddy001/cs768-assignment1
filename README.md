@@ -1,4 +1,8 @@
 # cs768-2025-assignment
+- `src/` repo contain intial implementations of the assignment. However, the final versions are in kaggle
+- `evaluation.py` loads necessary files for unseen nodes evaluation.
+- `task1_analysis.py` loads the dataset and builds the citation graph.
+- `assign-cs768.ipynb` builds the citation graph and trains the model for link prediction. However, it is run in kaggle notebook. The link to notebook is [here](https://www.kaggle.com/code/chanikya210050053/assign-cs768).
 
 ## Assignment: CS 768
 
