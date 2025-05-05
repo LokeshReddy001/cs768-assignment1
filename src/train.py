@@ -38,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser(description='Train GraphSAGE link predictor')
     parser.add_argument('--graph', required=True)
     parser.add_argument('--data_dir', required=True)
-    parser.add_argument('--epochs', type=int, default=10)
+    parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--device', default='cuda' if torch.cuda.is_available() else 'cpu')
     parser.add_argument('--out_model', default='models/linkpred.pt')
@@ -65,6 +65,7 @@ def main():
         model.train()
         optimizer.zero_grad()
         neg_train = negative_sampling(edge_index, num_neg_samples=pos_train.size(1), method='sparse')
+        print(pos_train, neg_train)
         pos_out, neg_out = model(x, edge_index, pos_train, neg_train)
         loss = (
             F.binary_cross_entropy_with_logits(pos_out, torch.ones_like(pos_out)) +

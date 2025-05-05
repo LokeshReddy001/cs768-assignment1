@@ -3,3 +3,7 @@ matplotlib
 tqdm
 rapidfuzz
 pybtex
+torch
+torch_geometric
+sentence-transformers
+scikit-learn

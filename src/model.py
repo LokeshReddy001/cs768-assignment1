@@ -9,19 +9,19 @@ import os
 import networkx as nx
 import numpy as np
 
-# 1. Prepare text embeddings
 sbert = SentenceTransformer('all-MiniLM-L6-v2')
 
 def load_graph(graph_path):
     Gnx = nx.read_graphml(graph_path)
-    # map node idx
+
     mapping = {nid: i for i, nid in enumerate(Gnx.nodes())}
     edges = np.array([[mapping[u], mapping[v]] for u, v in Gnx.edges()]).T
-    # node features = SBERT embeddings of title+abstract loaded externally
-    # placeholder zero features for now
-    x = torch.zeros((len(mapping), 384), dtype=torch.float)
-    data = Data(x=x, edge_index=torch.tensor(edges, dtype=torch.long))
-    return data, mapping
+
+    # x = torch.zeros((len(mapping), 384), dtype=torch.float)
+    # data = Data(x=x, edge_index=torch.tensor(edges, dtype=torch.long))
+    # return data, mapping
+    edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
+    return edge_index, mapping
 
 class LinkPredictor(torch.nn.Module):
     def __init__(self, in_dim=384, hidden=128, num_layers=2):
@@ -38,5 +38,3 @@ class LinkPredictor(torch.nn.Module):
         pos_score = self.lin(pos_h).view(-1)
         neg_score = self.lin(neg_h).view(-1)
         return pos_score, neg_score
-
-# ... more training code ...
